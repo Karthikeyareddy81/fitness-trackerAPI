@@ -1,4 +1,4 @@
-# API PROJECT
+# fitness-trackerAPI
 
 ## created using react and exercise dp api(an free rapid api).
 
