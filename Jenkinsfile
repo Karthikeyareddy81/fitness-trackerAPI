@@ -59,11 +59,7 @@ pipeline {
             }
         }
 
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Karthikeyareddy81/fitness-trackerAPI.git'
-        }
-
+        
         stage("Build & Push Docker Image"){
             steps {
                 script{
