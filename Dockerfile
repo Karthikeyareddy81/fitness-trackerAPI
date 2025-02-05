@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the Maven build file first to leverage Docker caching
 COPY pom.xml ./
-COPY src ./src
+#COPY src ./src
 
 # Build the application using Maven
 RUN apt-get update && apt-get install -y maven \
