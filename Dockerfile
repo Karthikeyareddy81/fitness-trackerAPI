@@ -1,20 +1,23 @@
-# Use an official OpenJDK runtime as a base image
-FROM eclipse-temurin:17-jdk
+# Use official Node.js LTS image as the base
+FROM node:18-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Maven build file first to leverage Docker caching
-COPY pom.xml ./
-#COPY src ./src
+# Copy package files first (for better caching)
+COPY package.json package-lock.json ./
 
-# Build the application using Maven
-RUN apt-get update && apt-get install -y maven \
-    && mvn clean package -DskipTests \
-    && mv target/*.jar app.jar
+# Install dependencies
+RUN npm install --frozen-lockfile
 
-# Expose the application port
-EXPOSE 8080
+# Copy the entire project
+COPY . .
 
-# Run the application
-CMD ["java", "-jar", "app.jar"]
+# Build the Vite project
+RUN npm run build
+
+# Expose the port used by Vite (usually 5173 for dev or 3000/8080 for production)
+EXPOSE 5173
+
+# Start the Vite application
+CMD ["npm", "run", "dev"]
